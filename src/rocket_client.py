@@ -64,7 +64,7 @@ class RocketChatClient:
         All of the users and their information, limited to permissions.
         """
         try:
-            return self.client.users_list(kwargs)
+            return self.client.users_list(**kwargs)
         except Exception as e:
             print(f"Failed to get the users: {str(e)}")
             raise
