@@ -39,9 +39,9 @@ class RocketChatClient:
 
     def send_message(
         self,
-        text: Any,
-        room_id: Optional[Any] = None,
-        channel: Optional[Any] = None,
+        text: str,
+        room_id: Optional[str] = None,
+        channel: Optional[str] = None,
         **kwargs: Any,
     ):
         """
@@ -70,7 +70,7 @@ class RocketChatClient:
             raise
 
     def get_room_id(
-        self, room_id: Optional[Any] = None, room_name: Optional[Any] = None
+        self, room_id: Optional[str] = None, room_name: Optional[str] = None
     ):
         """
         Retrieves the information about the room.
