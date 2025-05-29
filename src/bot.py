@@ -34,5 +34,17 @@ def poll_login_logout(interval=10):
         time.sleep(interval)
 
 
+def start():
+    """Start the bot and keep it running."""
+    try:
+        client.connect()
+        print("Bot is running. Press Ctrl+C to stop.")
+        poll_login_logout()
+    except KeyboardInterrupt:
+        print("Bot stopped by user")
+    except Exception as e:
+        print(f"Bot crashed: {str(e)}")
+
+
 if __name__ == "__main__":
-    poll_login_logout()
+    start()
