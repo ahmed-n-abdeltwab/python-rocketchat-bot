@@ -20,12 +20,16 @@ class RocketChatClient:
             print(f"Failed to connect: {str(e)}")
             raise
 
-    def send_message(self, message, room):
+    def send_message(self, message, room, **kwargs):
         """
         Send a message to a given room
         """
         try:
-            self.client.send_message(message, room_id=room)
+            self.client.send_message(
+                kwargs,
+                message=message,
+                room_id=room,
+            )
             print(f"Sent a message to room({room}): {message}")
         except Exception as e:
             print(f"Failed to send a message: {str(e)}")
