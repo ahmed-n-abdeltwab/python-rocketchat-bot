@@ -30,7 +30,7 @@ class RocketChatClient:
             self.client = RocketChat(
                 user=self.user,
                 password=self.password,
-                server_url=self,
+                server_url=self.server_url,
             )
             print("Bot connected successfully")
         except Exception as e:
