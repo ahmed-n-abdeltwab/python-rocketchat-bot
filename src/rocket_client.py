@@ -1,5 +1,6 @@
 # Wrapper for RocketChat API interactions
 from pprint import pprint
+from typing import Any, Optional
 from rocketchat_API.rocketchat import RocketChat
 import config
 
@@ -18,38 +19,38 @@ class RocketChatClient:
         """
         try:
             self.client = RocketChat(
-                user=config.ROCKETCHAT_USER,
-                password=config.ROCKETCHAT_PASSWORD,
-                server_url=config.ROCKETCHAT_URL,
+                user=self.user,
+                password=self.password,
+                server_url=self,
             )
             print("Bot connected successfully")
         except Exception as e:
             print(f"Failed to connect: {str(e)}")
             raise
 
-    def send_message(
-        self,
-        text: any,
-        room_id: any | None = None,
-        channel: any | None = None,
-        **kwargs: any,
-    ):
-        """
-        Send a message to a given room
-        """
-        try:
-            self.client.chat_post_message(
-                kwargs, text=text, room_id=room_id, channel=channel
-            )
-            if room_id is None:
-                print(f"Sent a message to channel({channel}): {text}")
-            else:
-                print(f"Sent a message to room({room_id}): {text}")
-        except Exception as e:
-            print(f"Failed to send a message: {str(e)}")
-            raise
+        def send_message(
+            self,
+            text: Any,
+            room_id: Optional[Any] = None,
+            channel: Optional[Any] = None,
+            **kwargs: Any,
+        ):
+            """
+            Send a message to a given room
+            """
+            try:
+                self.client.chat_post_message(
+                    text=text, room_id=room_id, channel=channel, **kwargs
+                )
+                if room_id is None:
+                    print(f"Sent a message to channel({channel}): {text}")
+                else:
+                    print(f"Sent a message to room({room_id}): {text}")
+            except Exception as e:
+                print(f"Failed to send a message: {str(e)}")
+                raise
 
-    def get_users(self, **kwargs):
+    def get_users(self, **kwargs: Any):
         """
         All of the users and their information, limited to permissions.
         """
@@ -59,7 +60,9 @@ class RocketChatClient:
             print(f"Failed to get the users: {str(e)}")
             raise
 
-    def get_room_id(self, room_id: any | None = None, room_name: any | None = None):
+    def get_room_id(
+        self, room_id: Optional[Any] = None, room_name: Optional[Any] = None
+    ):
         """
         Retrieves the information about the room.
         """
