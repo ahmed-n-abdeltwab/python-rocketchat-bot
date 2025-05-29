@@ -21,7 +21,9 @@ class RocketChatClient:
             raise
 
     def send_message(self, message, room):
-        """Send a message to the configured room."""
+        """
+        Send a message to a given room
+        """
         try:
             self.client.send_message(message, room_id=room)
             print(f"Sent a message to room({room}): {message}")
