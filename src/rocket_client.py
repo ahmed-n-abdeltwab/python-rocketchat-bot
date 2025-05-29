@@ -83,3 +83,14 @@ class RocketChatClient:
         except Exception as e:
             print(f"Failed to get the room id: {str(e)}")
             raise
+
+    def logout(self):
+        """
+        Logout the client.
+        """
+        try:
+            self.client.logout()
+            print("Logged out successfully")
+        except Exception as e:
+            print(f"Failed to logout: {str(e)}")
+            raise
