@@ -18,17 +18,18 @@ def poll_login_logout(interval=10):
 
     while True:
         users = client.get_users()
-        current_users = {u["_id"] for u in users if u.get("status") == "online"}
+        user_dict = {u["_id"]: u for u in users}
+        current_users = {
+            uid for uid, u in user_dict.items() if u.get("status") == "online"
+        }
 
         # Detect logins
         for uid in current_users - logged_in_users:
-            user = next(u for u in users if u["_id"] == uid)
-            greet_login(user)
+            greet_login(user_dict[uid])
 
         # Detect logouts
         for uid in logged_in_users - current_users:
-            user = next(u for u in users if u["_id"] == uid)
-            greet_logout(user)
+            greet_logout(user_dict[uid])
 
         logged_in_users = current_users
         time.sleep(interval)
@@ -41,11 +42,11 @@ def start():
         print("Bot is running. Press Ctrl+C to stop.")
         poll_login_logout()
     except KeyboardInterrupt:
-        client.logout()
         print("Bot stopped by user")
     except Exception as e:
-        client.logout()
         print(f"Bot crashed: {str(e)}")
+    finally:
+        client.logout()
 
 
 if __name__ == "__main__":
