@@ -1,4 +1,8 @@
 # Main script that runs the bot
+from dotenv import load_dotenv
+
+load_dotenv()
+
 import time
 from rocket_client import RocketChatClient
 from handlers import greet_login, greet_logout
