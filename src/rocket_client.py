@@ -11,7 +11,7 @@ class RocketChatClient:
     def connect(self):
         """Initialize RocketChat client and login."""
         try:
-            self.client = RocketChatAPI(
+            self.client = RocketChat(
                 user=config.ROCKETCHAT_USER,
                 password=config.ROCKETCHAT_PASSWORD,
                 server_url=config.ROCKETCHAT_URL,
