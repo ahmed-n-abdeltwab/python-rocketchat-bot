@@ -6,10 +6,16 @@ import config
 
 class RocketChatClient:
     def __init__(self):
+        self.user = config.ROCKETCHAT_USER
+        self.password = config.ROCKETCHAT_PASSWORD
+        self.server_url = config.ROCKETCHAT_URL
+        self.channel = config.CHANNEL
         self.client = None
 
     def connect(self):
-        """Initialize RocketChat client and login."""
+        """
+        Initialize RocketChat client and login.
+        """
         try:
             self.client = RocketChat(
                 user=config.ROCKETCHAT_USER,
@@ -21,44 +27,46 @@ class RocketChatClient:
             print(f"Failed to connect: {str(e)}")
             raise
 
-    def send_message(self, message, room, **kwargs):
+    def send_message(
+        self,
+        text: any,
+        room_id: any | None = None,
+        channel: any | None = None,
+        **kwargs: any,
+    ):
         """
         Send a message to a given room
         """
         try:
-            self.client.send_message(
-                kwargs,
-                message=message,
-                room_id=room,
+            self.client.chat_post_message(
+                kwargs, text=text, room_id=room_id, channel=channel
             )
-            print(f"Sent a message to room({room}): {message}")
+            if room_id is None:
+                print(f"Sent a message to channel({channel}): {text}")
+            else:
+                print(f"Sent a message to room({room_id}): {text}")
         except Exception as e:
             print(f"Failed to send a message: {str(e)}")
             raise
 
     def get_users(self, **kwargs):
         """
-        Gets all of the users in the system and their information
-        :param kwargs:
-        :return:
+        All of the users and their information, limited to permissions.
         """
         try:
-            return self.client.get_users(kwargs)
+            return self.client.users_list(kwargs)
         except Exception as e:
             print(f"Failed to get the users: {str(e)}")
             raise
 
-    def get_room_id(self, room_name, **kwargs):
+    def get_room_id(self, room_id: any | None = None, room_name: any | None = None):
         """
-        Get room ID
-        :param room_name:
-        :param kwargs:
-        :return:
+        Retrieves the information about the room.
         """
         try:
-            return self.client.get_room_id(
-                kwargs,
-                room_name=room_name,
+            return self.client.rooms_info(
+                room_id,
+                room_name,
             )
         except Exception as e:
             print(f"Failed to get the room id: {str(e)}")
