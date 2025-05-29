@@ -26,11 +26,15 @@ class RocketChatClient:
             self.client.send_message(message, room_id=room)
             print(f"Sent a message to room({room}): {message}")
         except Exception as e:
-            print(f"Failed to Send a message: {str(e)}")
+            print(f"Failed to send a message: {str(e)}")
             raise
 
     def get_users(self):
-        return self.client.get_users()
+        try:
+            return self.client.get_users()
+        except Exception as e:
+            print(f"Failed to get the users: {str(e)}")
+            raise
 
     def get_room_id(self, room_name):
         return self.client.get_room_id(room_name)
