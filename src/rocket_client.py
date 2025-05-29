@@ -6,8 +6,8 @@ import config
 class RocketChatClient:
     def __init__(self):
         self.client = RocketChat(
-            config.ROCKETCHAT_USER,
-            config.ROCKETCHAT_PASSWORD,
+            user=config.ROCKETCHAT_USER,
+            password=config.ROCKETCHAT_PASSWORD,
             server_url=config.ROCKETCHAT_URL,
         )
 
