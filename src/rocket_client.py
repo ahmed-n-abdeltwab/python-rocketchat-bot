@@ -1,5 +1,5 @@
 # Wrapper for RocketChat API interactions
-from rocketchat_API.rocketchat import RocketChat
+from rocketchat.api import RocketChatAPI
 import config
 
 
@@ -10,7 +10,7 @@ class RocketChatClient:
     def connect(self):
         """Initialize RocketChat client and login."""
         try:
-            self.client = RocketChat(
+            self.client = RocketChatAPI(
                 user=config.ROCKETCHAT_USER,
                 password=config.ROCKETCHAT_PASSWORD,
                 server_url=config.ROCKETCHAT_URL,
