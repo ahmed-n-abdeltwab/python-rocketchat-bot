@@ -1,0 +1,2 @@
+python-dotenv==1.1.0
+rocketchat_API==1.35.1
