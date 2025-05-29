@@ -4,12 +4,20 @@ import config
 
 
 class RocketChatClient:
-    def __init__(self):
-        self.client = RocketChat(
-            user=config.ROCKETCHAT_USER,
-            password=config.ROCKETCHAT_PASSWORD,
-            server_url=config.ROCKETCHAT_URL,
-        )
+    def __init__(self): ...
+
+    def connect(self):
+        """Initialize RocketChat client and login."""
+        try:
+            self.client = RocketChat(
+                user=config.ROCKETCHAT_USER,
+                password=config.ROCKETCHAT_PASSWORD,
+                server_url=config.ROCKETCHAT_URL,
+            )
+            print("Bot connected successfully")
+        except Exception as e:
+            print(f"Failed to connect: {str(e)}")
+            raise
 
     def post_message(self, message, room):
         return self.client.chat_post_message(message, room_id=room)
