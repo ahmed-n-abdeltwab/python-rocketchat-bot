@@ -6,7 +6,16 @@ import config
 
 
 class RocketChatClient:
+    """
+    A client for interacting with RocketChat API.
+    This class provides methods to connect to the RocketChat server,
+    send messages, retrieve users, and get room information.
+    """
+
     def __init__(self):
+        """
+        Initialize the RocketChat client with configuration parameters.
+        """
         self.user = config.ROCKETCHAT_USER
         self.password = config.ROCKETCHAT_PASSWORD
         self.server_url = config.ROCKETCHAT_URL
