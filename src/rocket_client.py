@@ -55,7 +55,10 @@ class RocketChatClient:
         :return:
         """
         try:
-            return self.client.get_room_id(room_name, kwargs)
+            return self.client.get_room_id(
+                kwargs,
+                room_name=room_name,
+            )
         except Exception as e:
             print(f"Failed to get the room id: {str(e)}")
             raise
