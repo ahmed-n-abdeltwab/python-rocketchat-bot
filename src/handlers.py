@@ -5,7 +5,7 @@ import config
 client = RocketChatClient()
 
 
-def greet_login(user):
+def greet_login(user: str):
     """
     Send a welcome message to the greet channel when a user logs in.
     """
@@ -14,7 +14,7 @@ def greet_login(user):
     client.send_message(message=message, room=room_id)
 
 
-def greet_logout(user):
+def greet_logout(user: str):
     """
     Send a goodbye message to the greet channel when a user logs out.
     """
