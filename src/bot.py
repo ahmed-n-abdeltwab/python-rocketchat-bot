@@ -41,8 +41,10 @@ def start():
         print("Bot is running. Press Ctrl+C to stop.")
         poll_login_logout()
     except KeyboardInterrupt:
+        client.logout()
         print("Bot stopped by user")
     except Exception as e:
+        client.logout()
         print(f"Bot crashed: {str(e)}")
 
 
