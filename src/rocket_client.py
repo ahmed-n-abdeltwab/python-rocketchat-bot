@@ -1,5 +1,6 @@
 # Wrapper for RocketChat API interactions
-from rocketchat.api import RocketChatAPI
+from pprint import pprint
+from rocketchat_API.rocketchat import RocketChat
 import config
 
 
