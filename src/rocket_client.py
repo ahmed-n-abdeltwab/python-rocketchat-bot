@@ -28,27 +28,27 @@ class RocketChatClient:
             print(f"Failed to connect: {str(e)}")
             raise
 
-        def send_message(
-            self,
-            text: Any,
-            room_id: Optional[Any] = None,
-            channel: Optional[Any] = None,
-            **kwargs: Any,
-        ):
-            """
-            Send a message to a given room
-            """
-            try:
-                self.client.chat_post_message(
-                    text=text, room_id=room_id, channel=channel, **kwargs
-                )
-                if room_id is None:
-                    print(f"Sent a message to channel({channel}): {text}")
-                else:
-                    print(f"Sent a message to room({room_id}): {text}")
-            except Exception as e:
-                print(f"Failed to send a message: {str(e)}")
-                raise
+    def send_message(
+        self,
+        text: Any,
+        room_id: Optional[Any] = None,
+        channel: Optional[Any] = None,
+        **kwargs: Any,
+    ):
+        """
+        Send a message to a given room
+        """
+        try:
+            self.client.chat_post_message(
+                text=text, room_id=room_id, channel=channel, **kwargs
+            )
+            if room_id is None:
+                print(f"Sent a message to channel({channel}): {text}")
+            else:
+                print(f"Sent a message to room({room_id}): {text}")
+        except Exception as e:
+            print(f"Failed to send a message: {str(e)}")
+            raise
 
     def get_users(self, **kwargs: Any):
         """

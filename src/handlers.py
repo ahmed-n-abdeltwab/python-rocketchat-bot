@@ -14,4 +14,4 @@ def greet_login(user):
 def greet_logout(user):
     message = f"See you later, @{user}! 👋"
     room_id = client.get_room_id(config.GREET_CHANNEL)
-    client.post_message(message, room_id)
+    client.send_message(message, room_id)
