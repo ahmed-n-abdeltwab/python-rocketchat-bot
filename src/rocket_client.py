@@ -33,7 +33,7 @@ class RocketChatClient:
         return self.client.get_users().json().get("users", [])
 
     def get_room_id(self, room_name):
-        rooms = self.client.channels_list().json().get("channels", [])
+        rooms = self.client.get_room_id().json().get("channels", [])
         for room in rooms:
             if room["name"] == room_name.lstrip("#"):
                 return room["_id"]
