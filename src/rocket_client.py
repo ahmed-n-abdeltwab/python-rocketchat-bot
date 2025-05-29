@@ -4,7 +4,8 @@ import config
 
 
 class RocketChatClient:
-    def __init__(self): ...
+    def __init__(self):
+        self.client = None
 
     def connect(self):
         """Initialize RocketChat client and login."""
