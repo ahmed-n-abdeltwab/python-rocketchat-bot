@@ -30,7 +30,7 @@ class RocketChatClient:
             raise
 
     def get_users(self):
-        return self.client.users_list().json().get("users", [])
+        return self.client.get_users().json().get("users", [])
 
     def get_room_id(self, room_name):
         rooms = self.client.channels_list().json().get("channels", [])
