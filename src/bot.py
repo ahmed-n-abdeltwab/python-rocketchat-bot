@@ -4,6 +4,8 @@ from dotenv import load_dotenv
 load_dotenv()
 
 import time
+import logging
+import traceback
 from rocket_client import RocketChatClient
 from handlers import greet_login, greet_logout
 
@@ -44,7 +46,8 @@ def start():
     except KeyboardInterrupt:
         print("Bot stopped by user")
     except Exception as e:
-        print(f"Bot crashed: {str(e)}")
+        logging.error("Bot crashed: %s", str(e))
+        traceback.print_exc()
     finally:
         client.logout()
 
