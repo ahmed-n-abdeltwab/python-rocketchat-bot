@@ -29,12 +29,27 @@ class RocketChatClient:
             print(f"Failed to send a message: {str(e)}")
             raise
 
-    def get_users(self):
+    def get_users(self, **kwargs):
+        """
+        Gets all of the users in the system and their information
+        :param kwargs:
+        :return:
+        """
         try:
-            return self.client.get_users()
+            return self.client.get_users(kwargs)
         except Exception as e:
             print(f"Failed to get the users: {str(e)}")
             raise
 
-    def get_room_id(self, room_name):
-        return self.client.get_room_id(room_name)
+    def get_room_id(self, room_name, **kwargs):
+        """
+        Get room ID
+        :param room_name:
+        :param kwargs:
+        :return:
+        """
+        try:
+            return self.client.get_room_id(room_name, kwargs)
+        except Exception as e:
+            print(f"Failed to get the room id: {str(e)}")
+            raise
