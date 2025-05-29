@@ -23,7 +23,7 @@ class RocketChatClient:
     def send_message(self, message, room):
         """Send a message to the configured room."""
         try:
-            self.client.chat_post_message(message, room_id=room)
+            self.client.send_message(message, room_id=room)
             print(f"Sent a message to room({room}): {message}")
         except Exception as e:
             print(f"Failed to connect: {str(e)}")
