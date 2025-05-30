@@ -48,9 +48,7 @@ class RocketChatClient:
         Send a message to a given room
         """
         try:
-            self.client.chat_post_message(
-                text=text, room_id=room_id, channel=channel, **kwargs
-            )
+            self.client.chat_post_message(text=text, room_id=room_id, **kwargs)
             if room_id is None:
                 print(f"Sent a message to channel({channel}): {text}")
             else:
@@ -89,7 +87,13 @@ class RocketChatClient:
             raise ValueError("Either room_id or room_name must be provided.")
 
         try:
-            return self.client.rooms_info(room_name=room_name)
+            return self.client.rooms_info(room_name=room_name).json().get(
+                "room", {}
+            ).get("_id") or self.client.rooms_info(room_id=room_id).json().get(
+                "room", {}
+            ).get(
+                "_id"
+            )
         except Exception as e:
             print(f"Failed to get the room id: {str(e)}")
             raise
