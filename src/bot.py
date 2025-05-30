@@ -6,10 +6,7 @@ load_dotenv()
 import time
 import logging
 import traceback
-from rocket_client import RocketChatClient
-from handlers import greet_login, greet_logout
-
-client = RocketChatClient()
+from handlers import greet_login, greet_logout, get_users, connect, logout
 
 
 logged_in_users = set()
@@ -19,7 +16,7 @@ def poll_login_logout(interval=10):
     global logged_in_users
 
     while True:
-        users = client.get_users()
+        users = get_users()
         user_dict = {u["_id"]: u for u in users}
         current_users = {
             uid for uid, u in user_dict.items() if u.get("status") == "online"
@@ -40,7 +37,7 @@ def poll_login_logout(interval=10):
 def start():
     """Start the bot and keep it running."""
     try:
-        client.connect()
+        connect()
         print("Bot is running. Press Ctrl+C to stop.")
         poll_login_logout()
     except KeyboardInterrupt:
@@ -49,7 +46,7 @@ def start():
         logging.error("Bot crashed: %s", str(e))
         traceback.print_exc()
     finally:
-        client.logout()
+        logout()
 
 
 if __name__ == "__main__":
