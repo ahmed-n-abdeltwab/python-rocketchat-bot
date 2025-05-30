@@ -42,6 +42,9 @@ def start():
         poll_login_logout()
     except KeyboardInterrupt:
         print("Bot stopped by user")
+    except RuntimeError as e:
+        logging.error("Runtime error: %s", str(e))
+        traceback.print_exc()
     except Exception as e:
         logging.error("Bot crashed: %s", str(e))
         traceback.print_exc()
