@@ -98,5 +98,4 @@ The bot will start polling for user login/logout events and send greeting messag
 
 ## 📝 **Important Notes**
 
-* **Secure Credentials**: Always use environment variables for credentials. **Do not commit sensitive information.**
 * **Channel ID**: Make sure the `CHANNEL` exists in Rocket.Chat. You can use either a `#channel` name or a direct room ID.
