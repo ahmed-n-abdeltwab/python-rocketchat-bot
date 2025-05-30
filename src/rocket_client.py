@@ -22,7 +22,7 @@ class RocketChatClient:
         self.channel = config.CHANNEL
         self.client = None
 
-    def connect(self):
+    def connect(self) -> None:
         """
         Initialize RocketChat client and login.
         """
@@ -43,14 +43,12 @@ class RocketChatClient:
         room_id: Optional[str] = None,
         channel: Optional[str] = None,
         **kwargs: Any,
-    ):
+    ) -> None:
         """
         Send a message to a given room
         """
         try:
-            self.client.chat_post_message(
-                text=text, room_id=room_id, channel=channel, **kwargs
-            )
+            self.client.chat_post_message(text=text, room_id=room_id, **kwargs)
             if room_id is None:
                 print(f"Sent a message to channel({channel}): {text}")
             else:
@@ -59,12 +57,17 @@ class RocketChatClient:
             print(f"Failed to send a message: {str(e)}")
             raise
 
-    def get_users(self, **kwargs: Any):
+    def get_users(self, **kwargs: Any) -> list:
         """
         All of the users and their information, limited to permissions.
         """
+        if not self.is_connected():
+            raise RuntimeError(
+                "RocketChat client is not connected. Call connect() first."
+            )
+
         try:
-            return self.client.users_list(**kwargs)
+            return self.client.users_list(**kwargs).json().get("users", [])
         except Exception as e:
             print(f"Failed to get the users: {str(e)}")
             raise
@@ -75,10 +78,21 @@ class RocketChatClient:
         """
         Retrieves the information about the room.
         """
+        if not self.is_connected():
+            raise RuntimeError(
+                "RocketChat client is not connected. Call connect() first."
+            )
+
+        if room_id is None and room_name is None:
+            raise ValueError("Either room_id or room_name must be provided.")
+
         try:
-            return self.client.rooms_info(
-                room_id,
-                room_name,
+            return self.client.rooms_info(room_name=room_name).json().get(
+                "room", {}
+            ).get("_id") or self.client.rooms_info(room_id=room_id).json().get(
+                "room", {}
+            ).get(
+                "_id"
             )
         except Exception as e:
             print(f"Failed to get the room id: {str(e)}")
@@ -88,9 +102,33 @@ class RocketChatClient:
         """
         Logout the client.
         """
+        if not self.is_connected():
+            print("RocketChat client is not connected. No need to logout.")
+            return
+
         try:
             self.client.logout()
             print("Logged out successfully")
         except Exception as e:
             print(f"Failed to logout: {str(e)}")
             raise
+
+    def is_connected(self) -> bool:
+        """
+        Check if the client is connected.
+        """
+        return self.client is not None and self.client.me().json().get("success", False)
+
+    def __del__(self):
+        """
+        Ensure the client is logged out when the instance is deleted.
+        """
+        if self.client is not None:
+            self.logout()
+            print("Destructor: RocketChat client instance deleted and logged out.")
+        else:
+            print(
+                "Destructor: RocketChat client instance deleted without logout (not connected)."
+            )
+        self.client = None
+        print("Destructor: RocketChat client instance deleted.")
