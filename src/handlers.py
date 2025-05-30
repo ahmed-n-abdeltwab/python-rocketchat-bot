@@ -41,19 +41,19 @@ def get_users(**kwargs) -> list:
         raise
 
 
-def greet_login(user: str):
+def greet_login(user: dict):
     """
     Send a welcome message to the greet channel when a user logs in.
     """
-    message = f"Welcome, @{user}! Glad you're here! 🚀"
+    message = f"Welcome, @{user['name']}! Glad you're here! 🚀"
     room_id = client.get_room_id(room_name=config.CHANNEL)
     client.send_message(text=message, room_id=room_id)
 
 
-def greet_logout(user: str):
+def greet_logout(user: dict):
     """
     Send a goodbye message to the greet channel when a user logs out.
     """
-    message = f"See you later, @{user}! 👋"
+    message = f"See you later, @{user['name']}! 👋"
     room_id = client.get_room_id(room_name=config.CHANNEL)
     client.send_message(text=message, room_id=room_id)
