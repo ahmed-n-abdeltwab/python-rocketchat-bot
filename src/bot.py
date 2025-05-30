@@ -43,11 +43,9 @@ def start():
     except KeyboardInterrupt:
         print("Bot stopped by user")
     except RuntimeError as e:
-        logging.error("Runtime error: %s", str(e))
-        traceback.print_exc()
+        logging.exception("Runtime error occurred", exc_info=e)
     except Exception as e:
-        logging.error("Bot crashed: %s", str(e))
-        traceback.print_exc()
+        logging.exception("Bot crashed", exc_info=e)
     finally:
         logout()
 
